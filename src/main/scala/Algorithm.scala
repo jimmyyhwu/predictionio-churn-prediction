@@ -2,6 +2,7 @@ package org.template.vanilla
 
 import io.prediction.controller.P2LAlgorithm
 import io.prediction.controller.Params
+import org.apache.commons.math3.distribution.NormalDistribution
 import org.apache.commons.math3.random.MersenneTwister
 
 import org.apache.spark.SparkContext
@@ -17,7 +18,7 @@ import org.deeplearning4j.nn.conf.NeuralNetConfiguration
 import org.deeplearning4j.nn.layers.factory.PretrainLayerFactory
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 import org.deeplearning4j.nn.weights.WeightInit
-import org.nd4j.linalg.factory.Nd4j
+import org.nd4j.linalg.api.activation.{Activations, ActivationFunction}
 import org.nd4j.linalg.lossfunctions.LossFunctions
 
 case class AlgorithmParams(mult: Int) extends Params
@@ -33,8 +34,10 @@ class Algorithm(val ap: AlgorithmParams)
     val conf = new NeuralNetConfiguration.Builder().iterations(100)
       .layerFactory(new PretrainLayerFactory(classOf[RBM]))
       .weightInit(WeightInit.SIZE)
-      .dist(Nd4j.getDistributions.createNormal(1e-5, 1))
-      .activationFunction("tanh")
+      /*.dist(Nd4j.getDistributions.createNormal(1e-5, 1))*/
+      .dist(new NormalDistribution(1e-5, 1))
+      /*.activationFunction("tanh")*/
+      .activationFunction(Activations.tanh)
       .momentum(0.9)
       .dropOut(0.8)
       .optimizationAlgo(OptimizationAlgorithm.GRADIENT_DESCENT)
@@ -50,8 +53,9 @@ class Algorithm(val ap: AlgorithmParams)
       .nOut(3)
       .list(2)
       .useDropConnect(false)
-      .hiddenLayerSizes(Array(3))
-    .override(new ClassifierOverride(1))
+      /*.hiddenLayerSizes(Array(3))*/
+      .hiddenLayerSizes(3)
+       /*.override(new ClassifierOverride(1))*/
       .build()
     val d = new MultiLayerNetwork(conf)
     val iter = new IrisDataSetIterator(150, 150)
@@ -66,8 +70,6 @@ class Algorithm(val ap: AlgorithmParams)
     val output = d.output(test.getFeatureMatrix)
     eval.eval(test.getLabels, output)
     logger.info("Score " + eval.stats())
-
-
 
     // Simply count number of events
     // and multiple it by the algorithm parameter
