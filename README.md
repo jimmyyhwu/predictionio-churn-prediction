@@ -1,15 +1,7 @@
-# Vanilla Engine Template
+# PredictionIO deeplearning4j MultiLayerNetwork Classification Engine Template
 
-## Documentation
+This engine template integrates the MultiLayerNetwork algorithm from the deeplearning4j library into PredictionIO. In this template, we use PredictionIO to classify the widely-known IRIS flower dataset by constructing a deep-belief net.
 
-Please refer to http://docs.prediction.io/templates/vanilla/quickstart/
+Train the model using the following command
 
-## Versions
-
-### v0.1.1
-
-- update for PredictionIO 0.9.0
-
-### v0.1.0
-
-- initial version
+    pio train -- --driver-class-path ./commons-math3-3.3.jar

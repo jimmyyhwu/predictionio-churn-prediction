@@ -1,4 +1,4 @@
-package org.template.vanilla
+package org.template.classification
 
 import io.prediction.controller.IEngineFactory
 import io.prediction.controller.Engine
@@ -14,12 +14,12 @@ case class PredictedResult(
   val label: Array[Double]
 ) extends Serializable
 
-object VanillaEngine extends IEngineFactory {
+object ClassificationEngine extends IEngineFactory {
   def apply() = {
     new Engine(
       classOf[DataSource],
       classOf[Preparator],
-      Map("algo" -> classOf[Algorithm]),
+      Map("dbn" -> classOf[Algorithm]),
       classOf[Serving])
   }
 }

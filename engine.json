@@ -1,7 +1,7 @@
 {
   "id": "default",
   "description": "Default settings",
-  "engineFactory": "org.template.vanilla.VanillaEngine",
+  "engineFactory": "org.template.classification.ClassificationEngine",
   "datasource": {
     "params" : {
       "appId": 1
@@ -9,7 +9,7 @@
   },
   "algorithms": [
     {
-      "name": "algo",
+      "name": "dbn",
       "params": {
         "mult" : 1
       }

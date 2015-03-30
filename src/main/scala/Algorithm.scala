@@ -1,4 +1,4 @@
-package org.template.vanilla
+package org.template.classification
 
 import io.prediction.controller.P2LAlgorithm
 import io.prediction.controller.Params
@@ -21,7 +21,6 @@ import org.nd4j.linalg.lossfunctions.LossFunctions
 case class AlgorithmParams(mult: Int) extends Params
 
 class Algorithm(val ap: AlgorithmParams)
-  // extends PAlgorithm if Model contains RDD[]
   extends P2LAlgorithm[PreparedData, Model, Query, PredictedResult] {
 
   @transient lazy val logger = Logger[this.type]
@@ -57,20 +56,23 @@ class Algorithm(val ap: AlgorithmParams)
     val dbn = new MultiLayerNetwork(conf)
     data.data.normalizeZeroMeanZeroUnitVariance()
     data.data.shuffle()
-    //val testAndTrain = next.splitTestAndTrain(110)
-    //val train = testAndTrain.getTrain
-    //d.fit(train)
-    dbn.fit(data.data)
 
-    //val test = testAndTrain.getTest
-    //val eval = new Evaluation()
-    //val output = d.output(test.getFeatureMatrix)
-    //eval.eval(test.getLabels, output)
+    // Train on entire dataset
+    dbn.fit(data.data)
     val eval: Evaluation = new Evaluation
     val output: INDArray = dbn.output(data.data.getFeatureMatrix)
     eval.eval(data.data.getLabels, output)
-    logger.info("Score " + eval.stats)
 
+    // Split dataset into training and testing sets
+    /*val testAndTrain = data.data.splitTestAndTrain(110)
+    val train = testAndTrain.getTrain
+    dbn.fit(train)
+    val test = testAndTrain.getTest
+    val eval: Evaluation = new Evaluation
+    val output = dbn.output(test.getFeatureMatrix)
+    eval.eval(test.getLabels, output)*/
+
+    logger.info("Score " + eval.stats)
     new Model(dbn)
   }
 

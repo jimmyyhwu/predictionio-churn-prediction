@@ -1,15 +1,11 @@
-package org.template.vanilla
+package org.template.classification
 
 import io.prediction.controller.PDataSource
 import io.prediction.controller.EmptyEvaluationInfo
 import io.prediction.controller.EmptyActualResult
 import io.prediction.controller.Params
-import io.prediction.data.storage.{PropertyMap, Event, Storage}
-
+import io.prediction.data.storage.{PropertyMap, Storage}
 import org.apache.spark.SparkContext
-import org.apache.spark.SparkContext._
-import org.apache.spark.rdd.RDD
-
 import grizzled.slf4j.Logger
 import org.nd4j.linalg.api.ndarray.INDArray
 import org.nd4j.linalg.dataset.DataSet
@@ -29,10 +25,10 @@ class DataSource(val dsp: DataSourceParams)
     val events: Array[(String, PropertyMap)] = eventsDb.aggregateProperties(
       appId = dsp.appId,
       entityType = "record",
-      required = Some(List("sepal-length", "sepal-width", "petal-length", "petal-width", "species")))(sc).collect
+      required = Some(List("sepal-length", "sepal-width", "petal-length", "petal-width", "species")))(sc).collect()
 
-    val features: INDArray = Nd4j.zeros(events.length.toInt, 4)
-    val labels: INDArray = Nd4j.zeros(events.length.toInt, 3)
+    val features: INDArray = Nd4j.zeros(events.length, 4)
+    val labels: INDArray = Nd4j.zeros(events.length, 3)
 
     events.zipWithIndex.foreach { case ((entityId, properties), row) =>
       val feature = Nd4j.create(
@@ -54,14 +50,14 @@ class DataSource(val dsp: DataSourceParams)
     }
 
     val data = new DataSet(features, labels)
-    data.normalizeZeroMeanZeroUnitVariance
+    data.normalizeZeroMeanZeroUnitVariance()
     new TrainingData(data)
   }
 }
 
 class TrainingData(
-                    val data: DataSet
-                    ) extends Serializable {
+  val data: DataSet
+) extends Serializable {
   override def toString = {
     s"events: [${data.numExamples()}] (${data.get(0)}...)"
   }
