@@ -82,13 +82,12 @@ class Algorithm(val ap: AlgorithmParams)
       query.petal_width
     )
     logger.info(Nd4j.create(features))
-    /*val output = model.dbn.output(Nd4j.create(features))
+    val output = model.dbn.output(Nd4j.create(features))
     PredictedResult(Array(
       output.getDouble(0),
       output.getDouble(1),
       output.getDouble(2)
-    ))*/
-    PredictedResult(Array(0,0,0));
+    ))
   }
 }
 
