@@ -54,17 +54,7 @@ class Algorithm(val ap: AlgorithmParams)
        /*.override(new ClassifierOverride(1))*/
       .build()
     val dbn = new MultiLayerNetwork(conf)
-
-    // Split dataset into training and testing sets
-    val testAndTrain = data.data.splitTestAndTrain(120)
-    val train = testAndTrain.getTrain
-    dbn.fit(train)
-    val test = testAndTrain.getTest
-    val eval: Evaluation = new Evaluation
-    val output = dbn.output(test.getFeatureMatrix)
-    eval.eval(test.getLabels, output)
-
-    logger.info("Score " + eval.stats)
+    dbn.fit(data.data)
     new Model(dbn)
   }
 
