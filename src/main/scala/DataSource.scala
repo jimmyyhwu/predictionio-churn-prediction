@@ -51,6 +51,7 @@ class DataSource(val dsp: DataSourceParams)
 
     val data = new DataSet(features, labels)
     data.normalizeZeroMeanZeroUnitVariance()
+    data.shuffle()
     new TrainingData(data)
   }
 }

@@ -54,23 +54,15 @@ class Algorithm(val ap: AlgorithmParams)
        /*.override(new ClassifierOverride(1))*/
       .build()
     val dbn = new MultiLayerNetwork(conf)
-    data.data.normalizeZeroMeanZeroUnitVariance()
-    data.data.shuffle()
-
-    // Train on entire dataset
-    dbn.fit(data.data)
-    val eval: Evaluation = new Evaluation
-    val output: INDArray = dbn.output(data.data.getFeatureMatrix)
-    eval.eval(data.data.getLabels, output)
 
     // Split dataset into training and testing sets
-    /*val testAndTrain = data.data.splitTestAndTrain(110)
+    val testAndTrain = data.data.splitTestAndTrain(120)
     val train = testAndTrain.getTrain
     dbn.fit(train)
     val test = testAndTrain.getTest
     val eval: Evaluation = new Evaluation
     val output = dbn.output(test.getFeatureMatrix)
-    eval.eval(test.getLabels, output)*/
+    eval.eval(test.getLabels, output)
 
     logger.info("Score " + eval.stats)
     new Model(dbn)
@@ -83,13 +75,9 @@ class Algorithm(val ap: AlgorithmParams)
       query.petal_length,
       query.petal_width
     )
-    logger.info(Nd4j.create(features))
-    val output = model.dbn.output(Nd4j.create(features))
-    PredictedResult(Array(
-      output.getDouble(0),
-      output.getDouble(1),
-      output.getDouble(2)
-    ))
+    val output = model.dbn.predict(Nd4j.create(features))
+    val labelNames = Array("Iris-setosa", "Iris-versicolor", "Iris-virginica")
+    new PredictedResult(labelNames(output(0)))
   }
 }
 
