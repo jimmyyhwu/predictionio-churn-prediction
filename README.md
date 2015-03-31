@@ -18,13 +18,13 @@ The data is stored in the event server with five properties per record. The meas
 
 ### Building, Training, and Deploying the Engine
 
-Build the engine using the following command. The no-asm flag will instruct the PredictionIO to skip building external dependencies.
+Build the engine using the following command.
 
-    pio build --no-asm
+    pio build
 
-Train the model with the following command. Note that the commons-math3 library included with Spark is incompatible with the one required by Deeplearning4j, so we must specify that PredictionIO use the version located at lib/commons-math3-3.3.jar.
+Train the model with the following command. Note that the commons-math3 library included with Spark is incompatible with the one required by Deeplearning4j, so we must specify that PredictionIO use the version located at lib-commons-math3/commons-math3-3.3.jar.
 
-    pio train -- --driver-class-path lib/commons-math3-3.3.jar
+    pio train -- --driver-class-path lib-commons-math3/commons-math3-3.3.jar
 
 Deploy the engine with the following command.
 

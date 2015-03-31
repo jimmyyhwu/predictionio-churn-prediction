@@ -2,7 +2,7 @@ import AssemblyKeys._
 
 assemblySettings
 
-name := "template-scala-parallel-vanilla"
+name := "predictionio-template-classification-dl4j-multilayer-network"
 
 organization := "io.prediction"
 
