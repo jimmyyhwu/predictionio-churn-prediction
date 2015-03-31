@@ -11,7 +11,7 @@ case class Query(
 ) extends Serializable
 
 case class PredictedResult(
-  val label: String
+  val species: String
 ) extends Serializable
 
 object ClassificationEngine extends IEngineFactory {

@@ -30,9 +30,7 @@ class Algorithm(val ap: AlgorithmParams)
     val conf = new NeuralNetConfiguration.Builder().iterations(100)
       .layerFactory(new PretrainLayerFactory(classOf[RBM]))
       .weightInit(WeightInit.SIZE)
-      /*.dist(Nd4j.getDistributions.createNormal(1e-5, 1))*/
       .dist(new NormalDistribution(1e-5, 1))
-      /*.activationFunction("tanh")*/
       .activationFunction(Activations.tanh)
       .momentum(0.9)
       .dropOut(0.8)
@@ -49,9 +47,7 @@ class Algorithm(val ap: AlgorithmParams)
       .nOut(3)
       .list(2)
       .useDropConnect(false)
-      /*.hiddenLayerSizes(Array(3))*/
       .hiddenLayerSizes(3)
-       /*.override(new ClassifierOverride(1))*/
       .build()
     val dbn = new MultiLayerNetwork(conf)
     dbn.fit(data.data)
