@@ -2,11 +2,11 @@
 
 ## Engine Quickstart
 
-# Overview
+### Overview
 
 This engine template integrates the MultiLayerNetwork implementation from the Deeplearning4j library into PredictionIO. In this template, we use PredictionIO to classify the widely-known IRIS flower dataset by constructing a deep-belief net.
 
-# Importing the IRIS Flower Dataset
+### Importing the IRIS Flower Dataset
 
 The IRIS flower dataset contains 3 classes of flowers with 50 samples of each, for a total of 150 samples. An in-depth description can be found [here](https://archive.ics.uci.edu/ml/datasets/Iris) and a copy of the dataset can be found [here](https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data). Each sample consists of four measurements (sepal length, sepal width, petal length, and petal width), as well as the class name (Iris-setosa, Iris-versicolor, and Iris-virginica).
 
@@ -16,7 +16,7 @@ A Python script has been provided to import the data to the event server using P
 
 The data is stored in the event server with five properties per record. The measurements `sepal-length`, `sepal-width`, `petal-length`, and `petal-width` are stored as floats, and the `species` is stored as a string.
 
-# Building, Training, and Deploying the Engine
+### Building, Training, and Deploying the Engine
 
 Build the engine using the following command.
 
@@ -30,7 +30,7 @@ Deploy the engine with the following command.
 
     pio deploy
 
-# Querying the Engine
+### Querying the Engine
 
 A query to the engine is a JSON consisting of the four flower measurements. The following is a sample JSON query.
 
