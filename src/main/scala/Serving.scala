@@ -1,4 +1,4 @@
-package org.template.vanilla
+package org.template.classification
 
 import io.prediction.controller.LServing
 
