@@ -43,14 +43,18 @@ class Algorithm(val ap: AlgorithmParams)
       .hiddenUnit(RBM.HiddenUnit.RECTIFIED)
       .lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY)
       .learningRate(1e-1f)
-      .nIn(4)
-      .nOut(3)
+      .nIn(17)
+      .nOut(1)
       .list(2)
       .useDropConnect(false)
       .hiddenLayerSizes(3)
       .build()
     val dbn = new MultiLayerNetwork(conf)
     dbn.fit(data.data)
+    val eval = new Evaluation()
+    val output = dbn.output(data.data.getFeatureMatrix());
+    eval.eval(data.data.getLabels(),output);
+    logger.info("Score " + eval.stats());
     new Model(dbn)
   }
 
