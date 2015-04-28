@@ -4,14 +4,29 @@ import io.prediction.controller.IEngineFactory
 import io.prediction.controller.Engine
 
 case class Query(
-  sepal_length: Double,
-  sepal_width: Double,
-  petal_length: Double,
-  petal_width: Double
+  state: String,
+  account_length: Double,
+  area_code: String,
+  international_plan: Boolean,
+  voice_mail_plan: Boolean,
+  number_vmail_messages: Double,
+  total_day_minutes: Double,
+  total_day_calls: Double,
+  total_day_charge: Double,
+  total_eve_minutes: Double,
+  total_eve_calls: Double,
+  total_eve_charge: Double,
+  total_night_minutes: Double,
+  total_night_calls: Double,
+  total_night_charge: Double,
+  total_intl_minutes: Double,
+  total_intl_calls: Double,
+  total_intl_charge: Double,
+  customer_service_calls: Double
 ) extends Serializable
 
 case class PredictedResult(
-  val species: String
+  val churn: String
 ) extends Serializable
 
 object ClassificationEngine extends IEngineFactory {

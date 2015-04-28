@@ -10,26 +10,28 @@ def import_events(client, file):
   next(f)
   count = 0
   print 'Importing data...'
-  prop_names = ['State',
-    'Account length',
-    'Area code',
-    'International plan',
-    'Voice mail plan',
-    'Number vmail messages',
-    'Total day minutes',
-    'Total day calls',
-    'Total day charge',
-    'Total eve minutes',
-    'Total eve calls',
-    'Total eve charge',
-    'Total night minutes',
-    'Total night calls',
-    'Total night charge',
-    'Total intl minutes',
-    'Total intl calls',
-    'Total intl charge',
-    'Customer service calls',
-    'Churn']
+  prop_names = [
+    'state',
+    'account_length',
+    'area_code',
+    'international_plan',
+    'voice_mail_plan',
+    'number_vmail_messages',
+    'total_day_minutes',
+    'total_day_calls',
+    'total_day_charge',
+    'total_eve_minutes',
+    'total_eve_calls',
+    'total_eve_charge',
+    'total_night_minutes',
+    'total_night_calls',
+    'total_night_charge',
+    'total_intl_minutes',
+    'total_intl_calls',
+    'total_intl_charge',
+    'customer_service_calls',
+    'churn'
+  ]
   for line in f:
     data = line.strip().split(',')
     props = {}
@@ -38,13 +40,11 @@ def import_events(client, file):
         props[prop_names[i]] = float(prop)
       elif i in [3, 4, 19]:
         if prop == 'True' or prop == 'Yes':
-          props[prop_names[i]] = float(1)
+          props[prop_names[i]] = True
         elif prop == 'False' or prop == 'No':
-          props[prop_names[i]] = float(0)
+          props[prop_names[i]] = False
       elif i in [0, 2]:
         props[prop_names[i]] = prop
-      else:
-        print i
     
     client.create_event(
       event = '$set',
